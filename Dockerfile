@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     ca-certificates
 
 # Install Node.js dan npm dari NodeSource
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
 # Install ekstensi PHP
