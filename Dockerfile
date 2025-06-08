@@ -1,10 +1,26 @@
 FROM php:8.4-apache
 
-RUN apt-get update
-RUN apt-get install -y git libzip-dev zip unzip npm
-RUN docker-php-ext-install pdo pdo_mysql zip
-RUN a2enmod rewrite
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Update dan install package yang dibutuhkan
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    unzip \
+    zip \
+    libzip-dev \
+    python3-certbot-apache \
+    certbot \
+    gnupg \
+    ca-certificates
 
-# install lets encrypt
-RUN apt-get -y install certbot python3-certbot-apache
+# Install Node.js dan npm dari NodeSource
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
+
+# Install ekstensi PHP
+RUN docker-php-ext-install pdo pdo_mysql zip
+
+# Aktifkan mod_rewrite Apache
+RUN a2enmod rewrite
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
